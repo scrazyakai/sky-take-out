@@ -35,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * 员工登录
      *
      * @param employeeLoginDTO
-     * @return
+     * @return Employee
      */
     public Employee login(EmployeeLoginDTO employeeLoginDTO) {
         String username = employeeLoginDTO.getUsername();
@@ -89,5 +89,30 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employees = page.getResult();
         return new PageResult(total, employees);
     }
+
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        Employee employee = new Employee();
+        employee.setStatus(status);
+        employee.setId(id);
+        employeeMapper.update(employee);
+    }
+
+    @Override
+    public Employee getById(Long id) {
+        Employee emp =  employeeMapper.getById(id);
+        emp.setPassword("****");
+        return emp;
+    }
+
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        Employee emp = new Employee();
+        BeanUtils.copyProperties(employeeDTO, emp);
+        employeeMapper.update(emp);
+        emp.setUpdateTime(LocalDateTime.now());
+        emp.setUpdateUser(BaseContext.getCurrentId());
+    }
+
 
 }
