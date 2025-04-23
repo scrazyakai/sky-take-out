@@ -1,5 +1,6 @@
 package com.sky.entity;
 
+import com.sky.dto.OrdersPageQueryDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -107,4 +108,5 @@ public class Orders implements Serializable {
 
     //餐具数量状态  1按餐量提供  0选择具体数量
     private Integer tablewareStatus;
+
 }

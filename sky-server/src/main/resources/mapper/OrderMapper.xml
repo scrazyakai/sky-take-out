@@ -67,4 +67,45 @@
         </set>
         where id = #{id}
     </update>
+        <!--    分页条件查询-->
+    <select id="pageQuery" resultType="com.sky.entity.Orders">
+        select * from orders
+        <where>
+            <if test="userId != null"> user_id = #{userId}</if>
+            <if test="status != null"> and status = #{status}</if>
+            <if test="number!=null and number != '' ">and number = concat('%',#{number},;'%')</if>
+            <if test="beginTime != null"> and beginTime = #{beginTime}</if>
+            <if test="endTime != null"> and endTime = #{endTime}</if>
+            <if test="phone != null"> phone = concat('%',#{phone},'%') </if>
+        </where>
+        order by order_time desc
+    </select>
+    <select id="getById" resultType="com.sky.entity.Orders">
+        select * from orders where id = #{id}
+    </select>
+    <select id="sumByMap" resultType="java.lang.Double">
+        select sum(amount) from orders
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="begin != null">
+                and order_time &gt;= #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt;= #{end}
+            </if>
+        </where>
+    </select>
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from user
+        <where>
+            <if test="begin != null">
+                and create_time &gt; #{begin}
+            </if>
+            <if test="end != null">
+                and create_time &lt; #{end}
+            </if>
+        </where>
+    </select>
 </mapper>
