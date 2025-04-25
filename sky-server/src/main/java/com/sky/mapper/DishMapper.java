@@ -77,4 +77,10 @@ public interface DishMapper {
      * @return
      */
     Integer countByMap(Map map);
+    /**
+     * 根据条件统计菜品数量
+     * @param map
+     * @return
+     */
+
 }
